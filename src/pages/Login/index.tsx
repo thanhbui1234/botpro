@@ -22,7 +22,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    const subscription = watch((value, { name }) => {
+    const subscription = watch((_, { name }) => {
       if (name && errors[name]) {
         clearErrors(name);
       }
