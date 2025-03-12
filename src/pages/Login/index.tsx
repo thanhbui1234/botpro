@@ -1,15 +1,10 @@
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button } from "antd";
+import { formSchema, FormValues } from "../../interface/form";
+import { login } from "../../services/authService";
 
-const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  password: z.string().min(1, "Name is required"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 const Login = () => {
   const {
     control,
@@ -30,8 +25,15 @@ const Login = () => {
     return () => subscription.unsubscribe();
   }, [watch, clearErrors, errors]);
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Form Data:", data);
+  const onSubmit = async ({ username, password }: FormValues) => {
+    try {
+      const { token } = await login(username, password);
+      console.log(token);
+
+      // window.location.href = "/";
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
   return (
     <>
@@ -50,12 +52,14 @@ const Login = () => {
             <span className="text-red-500">*</span> Name
           </label>
           <Controller
-            name="name"
+            name="username"
             control={control}
             render={({ field }) => <Input {...field} />}
           />
-          {errors.name && (
-            <p className="text-red-500 max-w-[200px]">{errors.name.message}</p>
+          {errors.username && (
+            <p className="text-red-500 max-w-[200px]">
+              {errors.username.message}
+            </p>
           )}
         </div>
 
