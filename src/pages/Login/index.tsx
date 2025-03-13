@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button } from "antd";
 import { formSchema, FormValues } from "../../interface/form";
 import { login } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -15,6 +16,7 @@ const Login = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
@@ -29,7 +31,7 @@ const Login = () => {
     try {
       const { token } = await login(username, password);
       console.log(token);
-
+      navigate("/");
       // window.location.href = "/";
     } catch (error) {
       console.error("Login failed:", error);
