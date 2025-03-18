@@ -1,21 +1,11 @@
-import { JSX } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Layout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
-
-const isAuthenticated = () => {
-  return localStorage.getItem("token") !== null;
-};
-
-const PrivateRoute = ({ element }: { element: JSX.Element }) => {
-  return isAuthenticated() ? element : <Navigate to="/login" replace />;
-};
-
-const PublicRoute = ({ element }: { element: JSX.Element }) => {
-  return isAuthenticated() ? <Navigate to="/" replace /> : element;
-};
+import { lazy } from "react";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublichRouter";
+const Home = lazy(() => import("../pages/Home"));
 
 const router = createBrowserRouter([
   {
@@ -24,7 +14,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Navigate to="/bot" replace />,
+      },
+      {
         element: <PrivateRoute element={<Home />} />,
+        path: "/bot",
+      },
+      {
+        element: <PrivateRoute element={<h1>hihi</h1>} />,
+        path: "/strategy",
+      },
+      {
+        element: <PrivateRoute element={<h1>huhu </h1>} />,
+        path: "/position",
       },
     ],
   },
@@ -33,7 +35,6 @@ const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        index: true,
         element: <PublicRoute element={<Login />} />,
       },
     ],

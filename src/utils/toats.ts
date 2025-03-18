@@ -15,7 +15,7 @@ export const useToast = () => {
   };
 
   return {
-    toast, // dùng toast('success', 'Hello')
-    contextHolder, // đưa vào JSX
+    toast,
+    contextHolder,
   };
 };
