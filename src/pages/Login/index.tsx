@@ -5,6 +5,7 @@ import { Input, Button } from "antd";
 import { formSchema, FormValues } from "../../interface/form";
 import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../utils/toats";
 
 const Login = () => {
   const {
@@ -17,6 +18,7 @@ const Login = () => {
     resolver: zodResolver(formSchema),
   });
   const navigate = useNavigate();
+  const { toast, contextHolder } = useToast();
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
@@ -32,13 +34,14 @@ const Login = () => {
       const { token } = await login(username, password);
       console.log(token);
       navigate("/");
-      // window.location.href = "/";
     } catch (error) {
-      console.error("Login failed:", error);
+      console.log(error);
+      toast("error", "Oops! Something went wrong");
     }
   };
   return (
     <>
+      {contextHolder}
       <span className="text-[#333] text-3xl pb-6 ">Welcome</span>
       <img
         className="rounded-xl"
