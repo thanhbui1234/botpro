@@ -1,3 +1,5 @@
+import { axiosInstance } from "./api";
+
 interface LoginResponse {
   token: string;
 }
@@ -18,4 +20,13 @@ export const login = async (
 export const logout = () => {
   localStorage.removeItem("token");
   window.location.href = "/login";
+};
+
+export const loginService = async (email: string, password: string) => {
+  const response = await axiosInstance.post("/login", { email, password });
+  return response.data; // Trả về { token, user }
+};
+
+export const logoutService = async () => {
+  return await axiosInstance.post("/logout");
 };

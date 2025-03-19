@@ -19,6 +19,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const { toast, contextHolder } = useToast();
+  console.log("hi");
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {

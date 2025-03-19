@@ -1,33 +1,34 @@
-import { api } from "./api";
+import { axiosInstance } from "./api";
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+export const PostService = {
+  getPosts: async () => {
+    const response = await axiosInstance.get("/posts");
+    return response.data;
+  },
 
-// Get all users
-export const getUsers = async (): Promise<User[]> => {
-  const response = await api.get("/users");
-  return response.data;
-};
+  getPostById: async (id: number) => {
+    const response = await axiosInstance.get(`/posts/${id}`);
+    return response.data;
+  },
 
-// Create a new user
-export const createUser = async (user: Omit<User, "id">): Promise<User> => {
-  const response = await api.post("/users", user);
-  return response.data;
-};
+  createPost: async (postData: {
+    title: string;
+    body: string;
+    userId: number;
+  }) => {
+    const response = await axiosInstance.post("/posts", postData);
+    return response.data;
+  },
 
-// Update user by ID
-export const updateUser = async (
-  id: number,
-  user: Partial<User>
-): Promise<User> => {
-  const response = await api.put(`/users/${id}`, user);
-  return response.data;
-};
+  updatePost: async (
+    id: number,
+    updatedData: { title?: string; body?: string }
+  ) => {
+    const response = await axiosInstance.put(`/posts/${id}`, updatedData);
+    return response.data;
+  },
 
-// Delete user by ID
-export const deleteUser = async (id: number): Promise<void> => {
-  await api.delete(`/users/${id}`);
+  deletePost: async (id: number) => {
+    await axiosInstance.delete(`/posts/${id}`);
+  },
 };

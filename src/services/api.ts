@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export const API_URL = "https://jsonplaceholder.typicode.com";
+import { useAuthStore } from "../store/useAuthStore";
 
 // Create an Axios instance
-export const api = axios.create({
+export const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
@@ -11,9 +12,10 @@ export const api = axios.create({
 });
 
 // Request Interceptor (Attach Token)
-api.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token =
+      useAuthStore.getState().token || localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -23,7 +25,7 @@ api.interceptors.request.use(
 );
 
 // Response Interceptor (Handle Errors)
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
