@@ -4,7 +4,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import { lazy } from "react";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublichRouter";
-const Home = lazy(() => import("../pages/Home"));
+const Bots = lazy(() => import("../pages/Bots"));
 const Login = lazy(() => import("../pages/Login"));
 
 const router = createBrowserRouter([
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         element: <Navigate to="/bot" replace />,
       },
       {
-        element: <PrivateRoute element={<Home />} />,
+        element: <PrivateRoute element={<Bots />} />,
         path: "/bot",
       },
       {

@@ -1,7 +1,9 @@
+import HeadBot from "../../components/bots/HeadBot";
+
 const Home = () => {
   return (
     <>
-      <h1>khoc cl</h1>
+      <HeadBot />
     </>
   );
 };
