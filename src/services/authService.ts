@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from "./api";
 
 interface LoginResponse {
@@ -8,7 +10,7 @@ export const login = async (
   username: string,
   password: string
 ): Promise<LoginResponse> => {
-  if (username === "chithanh" && password === "123456") {
+  if (username === "chithanh" && password === "chithanh") {
     const token = "1232132132132131"; // Token giả định
     localStorage.setItem("token", token);
     return { token };
@@ -22,9 +24,18 @@ export const logout = () => {
   window.location.href = "/login";
 };
 
-export const loginService = async (email: string, password: string) => {
-  const response = await axiosInstance.post("/login", { email, password });
-  return response.data; // Trả về { token, user }
+export const loginService = async (username: string, password: string) => {
+  try {
+    // have not yet api
+    // const response = await axiosInstance.post("/login", { email, password });
+    if (username === "chithanh" && password === "chithanh") {
+      const token = "1232132132132131"; // Token giả định
+      const user = { "name ": "thanh" };
+      return { token, user };
+    }
+  } catch (error: any) {
+    console.log(error);
+  }
 };
 
 export const logoutService = async () => {

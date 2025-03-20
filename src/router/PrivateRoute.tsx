@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../utils/authenticated";
+import { useAuthStore } from "../store/useAuthStore";
 
 interface PrivateRouteProps {
   element: React.ReactNode;
 }
 
 export default function PrivateRoute({ element }: PrivateRouteProps) {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  const { token } = useAuthStore();
+  const storedToken = localStorage.getItem("token");
 
-  return <>{element}</>;
+  return token || storedToken ? element : <Navigate to="/login" replace />;
 }

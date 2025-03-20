@@ -3,9 +3,9 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button } from "antd";
 import { formSchema, FormValues } from "../../interface/form";
-import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../utils/toats";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Login = () => {
   const {
@@ -17,9 +17,10 @@ const Login = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
+
+  const { login, loading } = useAuthStore();
   const navigate = useNavigate();
   const { toast, contextHolder } = useToast();
-  console.log("hi");
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
@@ -32,8 +33,7 @@ const Login = () => {
 
   const onSubmit = async ({ username, password }: FormValues) => {
     try {
-      const { token } = await login(username, password);
-      console.log(token);
+      await login(username, password);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ const Login = () => {
         </div>
 
         <Button type="primary" htmlType="submit" className="w-full">
-          Submit
+          {loading ? "Loading..." : "Submit"}
         </Button>
       </form>
     </>
