@@ -46,7 +46,7 @@ const Login = () => {
       <span className="text-[#333] text-3xl pb-6 ">Welcome</span>
       <img
         className="rounded-xl"
-        src="/public/459032556_4652162325009674_2150175736681819297_n.jpg"
+        src="459032556_4652162325009674_2150175736681819297_n.jpg"
         alt="Logo"
       />
       <form
