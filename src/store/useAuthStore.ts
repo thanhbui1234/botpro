@@ -14,7 +14,6 @@ interface AuthState {
 
 // Lấy token từ localStorage khi app khởi động
 const storedToken = localStorage.getItem("token");
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: storedToken,

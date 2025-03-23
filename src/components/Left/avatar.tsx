@@ -24,7 +24,7 @@ const AvatarWallet = () => {
       <Dropdown menu={{ items }} trigger={["click"]}>
         <Space>
           <Avatar
-            src="/public/anh-gai-xinh-toc-ngan-76-jpg-1696391678-04102023105438.webp"
+            src="anh-gai-xinh-toc-ngan-76-jpg-1696391678-04102023105438.webp"
             alt="gai xinh"
             size={40}
           />
